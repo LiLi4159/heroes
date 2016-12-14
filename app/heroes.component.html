@@ -1,0 +1,36 @@
+
+<div class="row">
+    <div class="col-xs-4">
+        <ul class="heroes">
+            <li *ngFor="let hero of heroes; let i=index" (click)="onClickItem(hero)">
+                <span class="badge">{{hero.id}}</span>{{hero.hero_name}}  
+                <input type="checkbox" [checked]="isHeroChecked(hero)" class="pull-right" (click)="updateMergeHeroes(hero, $event);error=null" [disabled]="heroesToMerge.length>=2 && !isHeroChecked(hero)"/>
+            </li>
+        </ul>
+        <button class="btn" (click)="newHero()">New Hero</button>
+       
+    </div>
+    <div class="col-xs-8" *ngIf="selectedHero">
+         <form (ngSubmit)="onSubmitHero(selectedHero)">
+            <button class="btn" type="submit" >Add Hero</button>
+            <p class="bg-warning" *ngIf="newHeroError">{{newHeroError}}</p>
+            <hero-detail [hero]="selectedHero"  [readOnly]="false"></hero-detail>
+         </form>
+    </div>
+</div>
+<hr>
+<h3>Merge Heroes:</h3>
+  <fieldset *ngIf="heroesToMerge && heroesToMerge.length==2">
+      <legend>Pick attributes from one hero to merge:</legend>
+      <div *ngFor="let mHero of heroesToMerge; let i=index">
+       <label><input type="radio" name="attribute" value="{{i}}" [checked]="i==0" (click)="attributesToMerge=mHero.attributes">{{mHero.hero_name}}</label>
+       </div>
+  </fieldset>
+<p class="bg-warning" *ngIf="error">{{error}}</p>
+<button class="btn btn-md" (click)="mergeHeroes()">Merge heroes</button>
+<div class="row">
+     <div class="col-xs-6" *ngFor="let hero of heroesToMerge">
+        <h4>Hero {{hero.hero_name}}</h4>
+        <hero-detail [hero]="hero"></hero-detail>
+    </div>
+</div>

@@ -1,0 +1,93 @@
+
+<div *ngIf="hero"class="well">
+    <div class="form-group row" *ngIf="readOnly">
+      <label class="col-xs-4 col-form-label">ID:</label>
+      <div class="col-xs-8">
+        <span class="form-control" id="id">{{hero.id}}</span>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-xs-4 col-form-label">Hero Name: </label>
+      <div class="col-xs-8">
+        <input class="form-control" type="text" [(ngModel)]="hero.hero_name" id="hero_name" [disabled]="readOnly" required>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-xs-4 col-form-label">Real Name:</label>
+      <div class="col-xs-8">
+        <input class="form-control" type="text" [(ngModel)]="hero.real_name" id="real_name" [disabled]="readOnly" required>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-xs-4 col-form-label">Gender:</label>
+      <div class="col-xs-8">
+        <div class="radio">
+          <label><input type="radio" name="gender{{hero.id}}" [(ngModel)]="hero.gender" value="Male" [disabled]="readOnly">Male</label>
+        </div>
+        <div class="radio">
+          <label><input type="radio" name="gender{{hero.id}}" [(ngModel)]="hero.gender" value="Female" [disabled]="readOnly">Female</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="attribute" class="col-xs-4 col-form-label">Attributes:</label>
+      <div class="col-xs-8">
+          <fieldset [disabled]="readOnly">
+                <label class="col-xs-6 col-form-label">Intelligence:</label>
+                <div class="col-xs-6">
+                    <input class="form-control" type="number" min="0" max="100" [(ngModel)]="hero.attributes.intelligence" id="intelligence">
+                </div>
+                <label class="col-xs-6 col-form-label">Strength:</label>
+                <div class="col-xs-6">
+                    <input class="form-control" type="number" min="0" max="100" [(ngModel)]="hero.attributes.strength" id="strength">
+                </div>
+                <label class="col-xs-6 col-form-label">Speed:</label>
+                <div class="col-xs-6">
+                    <input class="form-control" type="number" min="0" max="100" [(ngModel)]="hero.attributes.speed" id="speed">
+                </div>
+                <label class="col-xs-6 col-form-label">Durability:</label>
+                <div class="col-xs-6">
+                    <input class="form-control" type="number" min="0" max="100" [(ngModel)]="hero.attributes.durability" id="durability">
+                </div>
+                <label class="col-xs-6 col-form-label">power:</label>
+                <div class="col-xs-6">
+                    <input class="form-control" type="number" min="0" max="100" [(ngModel)]="hero.attributes.power" id="power">
+                </div>
+                <label class="col-xs-6 col-form-label">Combat:</label>
+                <div class="col-xs-6">
+                    <input class="form-control" type="number" min="0" max="100" [(ngModel)]="hero.attributes.combat" id="Combat">
+                </div>
+          </fieldset>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-xs-4 col-form-label">Powers:</label>
+      <div class="col-xs-8 pull-left">
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let power of hero.powers">
+            {{power}}
+             <button type="button" class="delete" (click)="$event.stopPropagation();deletePower(power);" *ngIf="!readOnly">X</button>
+          </li>
+        </ul>
+        <div *ngIf="!readOnly" >
+            <button type="button" class="btn btn-xs" (click)="addPower(powerInput.value)">Add Power:</button>
+            <input type="text" placeholder="New Power" #powerInput/>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row"  id="weakness">
+      <label class="col-xs-4 col-form-label">Weaknesses:</label>
+      <div class="col-xs-8 pull-left">
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let weakness of hero.weaknesses">
+            {{weakness}}
+             <button type="button" class="delete" (click)="$event.stopPropagation();deleteWeakness(weakness);" *ngIf="!readOnly">X</button>
+          </li>
+        </ul>
+        <div *ngIf="!readOnly">
+            <button type="button" class="btn btn-xs" (click)="addWeakness(weakInput.value)">Add Weakness:</button>
+            <input type="text" placeholder="New Weakness" #weakInput >
+        </div>
+      </div>
+    </div>
+</div>
